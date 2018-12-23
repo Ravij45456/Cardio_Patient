@@ -1,0 +1,1 @@
+Copyright © 2016 VOG Calgary App Developer Inc. All Rights Reserved.

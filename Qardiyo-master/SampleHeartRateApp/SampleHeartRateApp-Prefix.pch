@@ -1,0 +1,22 @@
+//
+// Prefix header for all source files of the 'SudoTest' target in the 'SudoTest' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+    #import "GAI.h"
+    #import "GAIDictionaryBuilder.h"
+    #import "GAIFields.h"
+    #import <GoogleMobileAds/GADInterstitial.h>
+    #import <GoogleMobileAds/GADBannerView.h>
+    #import <GoogleMobileAds/GADRequest.h>
+    #import <GoogleMobileAds/GADBannerViewDelegate.h>
+#endif

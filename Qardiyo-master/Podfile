@@ -1,0 +1,34 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '8.0'
+# Uncomment this line if you're using Swift
+
+use_frameworks!
+
+target 'QardiyoHF' do
+    pod 'CorePlot', '~>1.6'
+    pod 'Alamofire', '~> 4.2'
+    pod 'IQKeyboardManagerSwift', '~> 4.0'
+    pod 'SwifterSwift', '~> 1.5'
+    pod 'JSQMessagesViewController', '~> 7.3'
+    pod 'SkyFloatingLabelTextField', '~> 3.0'
+    pod 'HMSegmentedControl', '~> 1.5'
+    pod 'SVProgressHUD'
+    pod 'Quickblox-WebRTC', '~> 2.7'
+    pod 'QuickBlox'
+    pod 'Kingfisher', '~> 4.0'
+    pod 'ResearchKit', '~> 1.0'
+    pod 'NYTPhotoViewer'
+    pod 'BFRImageViewer'
+    pod 'BMPlayer', '~> 0.9.1'
+    pod 'VGPlayer', '~> 0.1.5'
+    pod 'SwiftyJSON', '~> 4.0'
+    # pod 'QuickBlox', '~> 2.17.1'
+#pod 'Quickblox-WebRTC', '~> 2.6.3'
+pod 'CollapsibleTableSectionViewController', '~> 1.0.0'
+pod 'ExpandableCell'
+pod 'SwiftyJSON', '~> 4.0'
+pod 'MBProgressHUD', '~> 1.1.0'
+    pod 'Charts', '3.0.2'
+   pod 'CorePlot', '~>1.6'
+       pod 'DatePickerDialog'
+end
