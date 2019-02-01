@@ -92,13 +92,13 @@ class DeviceData{
         set{_weight = newValue}
     }
     
-    static func getSleep(access_token:String, user_id:String , completed: @escaping (Int) -> Void){
+    static func getSleep(access_token:String, user_id:String, Date: Date , completed: @escaping (Int) -> Void){
         
 //        GET https://api.fitbit.com/1.2/user/-/sleep/date/2017-04-02.json
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = formatter.string(from: Date())
+        let currentDate = formatter.string(from: Date)
         
         
         let headers = [
@@ -131,20 +131,25 @@ class DeviceData{
         })
     }
     
-    static func getStep(access_token:String, user_id:String , completed: @escaping (Double) -> Void){
+    static func getStep(access_token:String, user_id:String , Date: Date , completed: @escaping (Double) -> Void){
         
         //        GET https://api.fitbit.com/1.2/user/-/sleep/date/2017-04-02.json
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = formatter.string(from: Date())
+        let currentDate = formatter.string(from: Date)
         
         
         let headers = [
             "Authorization": "Bearer \(access_token)"
         ]
         
-        let url = URL(string: "\(FITBIT_WEB_API_LINK)/\(user_id)/activities/date/\(currentDate).json")
+        print("access_token = \(access_token)")
+        
+      let url = URL(string: "\(FITBIT_WEB_API_LINK)/\(user_id)/activities/date/\(currentDate).json")
+      // let url = URL(string: "\(FITBIT_WEB_API_LINK)/\(user_id)/activities/date/\(currentDate).json&startTime=02:32&duration=7200000")
+        
+       
         
         Alamofire.request(url!, method: .get, parameters: nil, headers: headers).responseJSON(completionHandler: {
             (response) in
@@ -170,13 +175,13 @@ class DeviceData{
         })
     }
     
-    static func getHeartRate(access_token:String, user_id:String , completed: @escaping (Double) -> Void){
+    static func getHeartRate(access_token:String, user_id:String, Date: Date, completed: @escaping (Double) -> Void){
         
         //        GET https://api.fitbit.com/1.2/user/-/sleep/date/2017-04-02.json
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = formatter.string(from: Date())
+        let currentDate = formatter.string(from: Date)
         
         
         let headers = [
@@ -213,13 +218,13 @@ class DeviceData{
         })
     }
     
-    static func getWeight(access_token:String, user_id:String , completed: @escaping (Double) -> Void){
+    static func getWeight(access_token:String, user_id:String, Date: Date , completed: @escaping (Double) -> Void){
         
         //        GET https://api.fitbit.com/1.2/user/-/sleep/date/2017-04-02.json
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = formatter.string(from: Date())
+        let currentDate = formatter.string(from: Date)
         
         
         let headers = [
@@ -280,7 +285,7 @@ class DeviceData{
         })
     }
     
-    static func getHeight(access_token:String, user_id:String , completed: @escaping (Double) -> Void){
+    static func getHeight(access_token:String, user_id:String , Date: Date, completed: @escaping (Double) -> Void){
         
         //        GET https://api.fitbit.com/1.2/user/-/sleep/date/2017-04-02.json
         

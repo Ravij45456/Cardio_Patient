@@ -8,6 +8,8 @@
 
 import SafariServices
 import Foundation
+import SVProgressHUD
+
 
 protocol AuthenticationProtocol {
     func authorizationDidFinish(_ success :Bool, url:URL)
@@ -21,7 +23,9 @@ class AuthenticationController: NSObject, SFSafariViewControllerDelegate {
 	let clientID = "22CQMD"//"YOUR_CLIENT_ID_HERE"
 	let clientSecret = "11183fea934b788c08ff7e4aa61ac86e"//YOUR_CLIENT_SECRET_HERE"
 	let baseURL = URL(string: "https://www.fitbit.com/oauth2/authorize")
-    static let redirectURI = "https://vogcalgaryappdeveloper.com/sync-successful/" //YOUR_CLIENT_URI_HERE://"
+  static let redirectURI = "https://vogcalgaryappdeveloper.com/sync-successful/" //YOUR_CLIENT_URI_HERE://"
+ //   static let redirectURI = "https://www.cardiohf.com/sync-successful.html/" //YOUR_CLIENT_URI_HERE://"
+    
 	let defaultScope = "sleep+settings+nutrition+activity+social+heartrate+profile+weight+location"
 
 	var authorizationVC: SFSafariViewController?
@@ -49,6 +53,8 @@ class AuthenticationController: NSObject, SFSafariViewControllerDelegate {
 
 			self?.authorizationVC?.dismiss(animated: true, completion: {
                 self?.delegate?.authorizationDidFinish(success,url: (self?.tokenURL)!)
+                SVProgressHUD.show()
+
 			})
 		})
 	}
@@ -64,6 +70,9 @@ class AuthenticationController: NSObject, SFSafariViewControllerDelegate {
 			NSLog("Unable to create authentication URL")
 			return
 		}
+        // SVProgressHUD.dismiss()
+        
+       
 
         vc = viewController
         
@@ -123,9 +132,18 @@ class AuthenticationController: NSObject, SFSafariViewControllerDelegate {
     
     func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL){
         tokenURL = URL
+        
+        DispatchQueue.main.async {
+            
+            SVProgressHUD.setStatus("start syncing")
+            SVProgressHUD.show()
+        }
     }
     
     func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
+        
+        // SVProgressHUD.dismiss()
+
         // parse url
         let strURL = tokenURL.absoluteString
         
@@ -154,6 +172,8 @@ class AuthenticationController: NSObject, SFSafariViewControllerDelegate {
         if access_token.charactersArray.count > 0 && user_id.charactersArray.count > 0 {
             self.vc.dismiss(animated: true, completion: {
                 self.delegate?.authorizationDidFinish(false,url: self.tokenURL)
+               // SVProgressHUD.dismiss()
+
             })
         }
     }    
