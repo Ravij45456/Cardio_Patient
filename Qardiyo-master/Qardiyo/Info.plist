@@ -21,7 +21,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.1</string>
 	<key>CFBundleVersion</key>
+<<<<<<< HEAD
 	<string>26</string>
+=======
+	<string>25</string>
+>>>>>>> 426fb01ea3ba3010965ceff469d7c2ea3af009b7
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
