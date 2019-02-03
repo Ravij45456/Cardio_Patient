@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import HealthKitUI
 
 
 class AutoSyncHealthDataModel: NSObject {
@@ -16,10 +17,10 @@ class AutoSyncHealthDataModel: NSObject {
     
     
     func startSyncAfterInter(time:TimeInterval){
-        
+      //  syncHealthDataByTimeInterval()
         startSyncing()
 
-     Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(self.startSyncing), userInfo: nil, repeats: true)
+   //  Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(self.startSyncing), userInfo: nil, repeats: true)
         
     }
     
@@ -31,7 +32,9 @@ class AutoSyncHealthDataModel: NSObject {
             //  SVProgressHUD.dismiss()
             
       //      self.arraySource = result!
-            
+            if (result == nil){
+                return
+            }
             for tempResutl in result!{
                 self.submitStep(deviceData: tempResutl, completed: {
                     print("Data successFully sync")
@@ -41,10 +44,59 @@ class AutoSyncHealthDataModel: NSObject {
              //   self.submitStep(deviceData: result![0], completed: {
             //        print("Data successFully sync")
               //  })
+            
             }
         })
         
         //    authenticationController = AuthenticationController(delegate: self)
+    }
+    
+    
+    
+    func syncHealthDataByTimeInterval(){
+         let healthStore = HKHealthStore()
+         let stepsQuantityType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        
+        func importStepsHistory() {
+            let now = Date()
+            let startDate = Calendar.current.date(byAdding: .day, value: -30, to: now)!
+            
+            var interval = DateComponents()
+            interval.day = 1
+            
+            var anchorComponents = Calendar.current.dateComponents([.day, .month, .year], from: now)
+            anchorComponents.hour = 0
+            let anchorDate = Calendar.current.date(from: anchorComponents)!
+            
+            let query = HKStatisticsCollectionQuery(quantityType: stepsQuantityType,
+                                                    quantitySamplePredicate: nil,
+                                                    options: [.cumulativeSum],
+                                                    anchorDate: anchorDate,
+                                                    intervalComponents: interval)
+            query.initialResultsHandler = { _, results, error in
+                guard let results = results else {
+                 //   log.error("Error returned form resultHandler = \(String(describing: error?.localizedDescription))")
+                    return
+                }
+                
+                results.enumerateStatistics(from: startDate, to: now) { statistics, _ in
+                    if let sum = statistics.sumQuantity() {
+                        let steps = sum.doubleValue(for: HKUnit.count())
+                        print("Amount of steps: \(steps), date: \(statistics.startDate)")
+                       
+                       
+                     let deviceData =   DeviceData.init(DeviceName: "iPhone", StepCount: steps, HeartRate: 0, Height: 0, Weight: 0)
+                        
+                        self.submitStep(deviceData: deviceData, completed: {
+                           // print(completed)
+                        })
+                        
+                    }
+                }
+            }
+            
+            healthStore.execute(query)
+        }
     }
     
     

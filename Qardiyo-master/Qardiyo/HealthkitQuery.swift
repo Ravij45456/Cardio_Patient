@@ -219,6 +219,8 @@ class HealthkitQuery{
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
                                               ascending: false)
         let limit = 0
+
+        
         
         let sampleQuery = HKSampleQuery(sampleType: sampleType,
                                         predicate: mostRecentPredicate,
